@@ -1,4 +1,4 @@
-# alertUp
+# modaltUp
 <h3> Guide </h3>
 <b>let modal = new alertUp(showStyle);</b> <i>// There are two styles: "slide" and "fade"</i>
 
