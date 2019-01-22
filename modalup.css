@@ -1,0 +1,65 @@
+.modalup-window
+{
+	background-color: #fffffa;
+	text-align: center;
+	min-width: 20px;
+	min-height: 20px;
+	box-shadow: 0 1px 15px rgba(0,0,0,0.25);
+	position: relative;
+	text-align: center;
+	padding-top: initial;
+	margin: 1rem;
+	margin-top: 0;
+}
+
+.modalup-main-div
+{
+	padding: 2rem;
+}
+
+.modalup-container
+{	
+	font-size: 20px;
+	font-family: 'Calibri', sans-serif;
+	position: absolute;
+	width: 100%;
+	z-index: 100000;
+}
+
+.modalup-centered
+{
+	display: flex;
+	justify-content: center;
+	align-content: space-between;
+	align-items: center;
+	flex-direction: column;
+}
+
+.modalup-rounded
+{
+	border-radius: .25rem;
+}
+
+.modalup-close-line
+{
+	width: 100%;
+	text-align: right;
+	float: right;
+	padding-right: 1rem;
+}
+
+.modalup-close-line > p > span:hover
+{
+	cursor: pointer;
+}
+
+.modalup-close
+{
+	font-size: 15px;
+	height: min-content;
+}
+
+.modalup-close::before
+{
+	content: '✕';
+}
