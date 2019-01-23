@@ -1,4 +1,4 @@
-class Builder {
+class Templates {
 	// Add elements to DOM
 	build(elementProps,block,where = 'append') {
 		let tag = elementProps['tag'];
@@ -10,20 +10,13 @@ class Builder {
 		if (typeof block === 'undefined') {
 			document.body.prepend(domElement);
 		} else {
-			where == 'append'? block.appendChild(domElement) : block.prepend(domElement);
+			where == 'append' ? block.appendChild(domElement) : block.prepend(domElement);
 		}
 		domElement.style.opacity = 1;
 		return domElement;
 	}
-}
-
-class Templates extends Builder {
-	constructor() {
-		super();
-	}
 
 	// Template for all modal windows
-
 	modalWindow(container) {
 		// The actual window
 		let modalWindow = this.build({
@@ -66,10 +59,10 @@ class modalUp extends Templates {
 	constructor(showStyle = 'fade') {
 		super();
 		this.showStyle = showStyle; 
-		this.fadeOutTime = 1000;
+		this.fadeOutTime = 400;
 		this.fadeInTime = 400;
-		this.appearTime = 400; // For "slide"
-		this.disappearTime = 1000; // For "slide"
+		this.appearTime = 800; // For "slide"
+		this.disappearTime = 800; // For "slide"
 		this.container = {
 			'tag': 'div',
 			'className': 'modalup-container modalup-centered'
@@ -105,7 +98,7 @@ class modalUp extends Templates {
 
 
 	slideIn(element) {
-		let counter = 1;
+		let counter = (150 / this.appearTime) * 4 ;
 		let interval = setInterval(function() {
 			let position = element.style.transform.replace(`translateY`,' ').replace('(','').replace('%)','');
 			position = Number(position) + counter;
@@ -121,7 +114,7 @@ class modalUp extends Templates {
 	}
 
 	slideOut(element) {
-		let counter = -1;
+		let counter = (-150 / this.disappearTime) * 4;
 		let interval = setInterval(function() {
 			let position = element.style.transform.replace(`translateY`,' ').replace('(','').replace('%)','');
 			position = Number(position) + counter;
