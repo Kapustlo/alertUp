@@ -1,6 +1,6 @@
 # modalUp
 <h3> Guide </h3>
-<b>let modal = new modaltUp(showStyle);</b> <i>// There are two styles: "slide" and "fade"</i>
+<b>let modal = new modalUp(showStyle);</b> <i>// There are two styles: "slide" and "fade"</i>
 
 
 <i>// Create a window calling "create" function and passing an associative arrays as its argument </i>
