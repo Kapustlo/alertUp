@@ -71,7 +71,7 @@ class modalUp extends Templates {
 		this.containerCreated = false;
 	}
 
-	fadeIn(element) {
+	fadeIn(element, time = this.fadeInTime) {
 		let counter = 0.01; 
 		let interval = setInterval(function () {
         if (element.style.opacity < 1) {
@@ -82,10 +82,10 @@ class modalUp extends Templates {
         		}
             clearInterval(interval);
         }
-    },this.fadeInTime * counter);
+    },time * counter);
 	}
 
-	fadeOut(element)  {
+	fadeOut(element, time = this.fadeOutTime)  {
 		let counter = 0.01; 
 		let interval = setInterval(function () {
         if (element.style.opacity > 0) {
@@ -93,13 +93,13 @@ class modalUp extends Templates {
         } else {
             clearInterval(interval);
         }
-    },this.fadeOutTime * counter);
+    },this.time * counter);
 	}
 
 
-	slideIn(element) {
-		let counter = (150 / this.appearTime) * 4 ;
-		let interval = setInterval(function() {
+	slideIn(element, time = this.appearTime) {
+		let counter = (150 / time) * 4 ;
+		let interval = setInterval( () => {
 			let position = element.style.transform.replace(`translateY`,' ').replace('(','').replace('%)','');
 			position = Number(position) + counter;
 			if (position <= 0) {
@@ -113,8 +113,8 @@ class modalUp extends Templates {
 		}, 1);
 	}
 
-	slideOut(element) {
-		let counter = (-150 / this.disappearTime) * 4;
+	slideOut(element, time = this.disappearTime) {
+		let counter = (-150 / time) * 4;
 		let interval = setInterval(function() {
 			let position = element.style.transform.replace(`translateY`,' ').replace('(','').replace('%)','');
 			position = Number(position) + counter;
@@ -130,8 +130,18 @@ class modalUp extends Templates {
 	}
 
 	closeModal() {
-		this.containerElement.remove();
-		this.containerCreated = false;
+		let time;
+		if (this.showStyle == "fade") {
+			this.fadeOut(this.modalWindow);
+			time = this.fadeOutTime;
+		} else if(this.showStyle == "slide") {
+			this.slideOut(this.modalWindow);
+			time = this.disappearTime;
+		}
+		setTimeout( () => {
+			this.containerElement.remove();
+			this.containerCreated = false;
+		},time + 1);
 	}
 
 	create(properties) {
@@ -142,6 +152,8 @@ class modalUp extends Templates {
 		}
 
 		let modalWindow = this.modalWindow(this.containerElement);
+
+		this.modalWindow = modalWindow;
 
 		for (let property in properties) {
 			let innerHTML = properties[property];
@@ -158,6 +170,10 @@ class modalUp extends Templates {
 						'tag': 'p',
 						'innerHTML': innerHTML
 					},div); 
+					break;
+				case "timer":
+					this.timer = properties[property];
+					break;
 			}
 		}
 
@@ -165,23 +181,19 @@ class modalUp extends Templates {
 		if (this.showStyle == "fade") {
 			modalWindow.style.opacity = 0;
 			this.fadeIn(modalWindow);
-			time = this.fadeOutTime;
 		} else if(this.showStyle == "slide") {
 			modalWindow.style.transform = 'translateY(-150%)';
 			this.slideIn(modalWindow);
-			time = this.disappearTime;
 		}
 		let closeBtn = modalWindow.getElementsByClassName('modalup-close')[0];
+		if(typeof this.timer != 'undefined') {
+			setTimeout(() => {
+				this.closeModal();
+			},this.timer);
+		}
 		closeBtn.onclick = () => {
 			closeBtn.onclick = null;
-			if (this.showStyle == "fade") {
-				this.fadeOut(modalWindow);
-			} else if(this.showStyle == "slide") {
-				this.slideOut(modalWindow);
-			}
-			setTimeout( () => {
-				this.closeModal(modalWindow);
-			},time + 1);
+			this.closeModal(modalWindow);
 		}
 		return modalWindow;
 	}
