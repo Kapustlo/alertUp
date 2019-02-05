@@ -83,7 +83,7 @@ class modalUp extends Templates {
 	popUp(element, time = this.popUpTime, size) {
 		let counter = (size.width + size.height) / time * 2;
 		let interval = setInterval(function(){
-			let transform =Number(element.style.transform.replace('scale(','').replace(')',''));
+			let transform = Number(element.style.transform.replace('scale(','').replace(')',''));
 			console.log(transform);
 			if (transform < 1) {
 				let val = transform + 0.01;
@@ -130,7 +130,7 @@ class modalUp extends Templates {
         } else {
             clearInterval(interval);
         }
-    },this.time * counter);
+    },time * counter);
 	}
 
 
@@ -166,16 +166,23 @@ class modalUp extends Templates {
 		}, 1);
 	}
 
+	getCloseTime(showStyle) {
+		if (showStyle == 'fade') {
+			return this.fadeOutTime;
+		} else if(showStyle == 'slide') {
+			return this.disappearTime;
+		} else if(showStyle == 'popup') {
+			return this.popOutTime;
+		} 
+	}
+
 	closeModal() {
-		let time;
+		let time = getCloseTime(this.showStyle);
 		if (this.showStyle == "fade") {
 			this.fadeOut(this.modalWindow);
-			time = this.fadeOutTime;
 		} else if(this.showStyle == "slide") {
 			this.slideOut(this.modalWindow);
-			time = this.disappearTime;
 		} else if(this.showStyle == "popup") {
-			time = this.popOutTime;
 			let width = this.modalWindow.offsetWidth;
 			let height = this.modalWindow.offsetHeight;
 			let size = {
@@ -223,7 +230,6 @@ class modalUp extends Templates {
 			}
 		}
 
-		let time;
 		if (this.showStyle == "fade") {
 			modalWindow.style.opacity = 0;
 			this.fadeIn(modalWindow);
@@ -237,11 +243,9 @@ class modalUp extends Templates {
 			this.popUp(this.modalWindow,800,{width: width, height: height});
 		}
 		let closeBtn = modalWindow.getElementsByClassName('modalup-close')[0];
-		if(typeof this.timer != 'undefined') {
-			setTimeout(() => {
-				this.closeModal();
-			},this.timer);
-		}
+
+		if(typeof this.timer != 'undefined') setTimeout(() => {this.closeModal();},this.timer);
+
 		closeBtn.onclick = () => {
 			closeBtn.onclick = null;
 			this.closeModal(modalWindow);
