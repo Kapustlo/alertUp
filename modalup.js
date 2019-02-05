@@ -56,19 +56,56 @@ class Templates {
 }
 
 class modalUp extends Templates {
-	constructor(showStyle = 'fade') {
+	constructor(type = 'alert', showStyle = 'fade') {
 		super();
 		this.showStyle = showStyle; 
+		this.type = type;
 		this.fadeOutTime = 400;
 		this.fadeInTime = 400;
 		this.appearTime = 800; // For "slide"
 		this.disappearTime = 800; // For "slide"
+		this.popUpTime = 1000;
+		this.popOutTime = 200;
+		let className;
+		if (type == 'alert') {
+			className = 'modalup-container modalup-centered';
+		} else if(type == 'modal') {
+			className = 'modalup-container modalup-centered modalup-container-fluid';
+		}
 		this.container = {
 			'tag': 'div',
-			'className': 'modalup-container modalup-centered'
+			'className': className
 		}
 		this.containerElement;
 		this.containerCreated = false;
+	}
+
+	popUp(element, time = this.popUpTime, size) {
+		let counter = (size.width + size.height) / time * 2;
+		let interval = setInterval(function(){
+			let transform =Number(element.style.transform.replace('scale(','').replace(')',''));
+			console.log(transform);
+			if (transform < 1) {
+				let val = transform + 0.01;
+				element.style.transform = `scale(${val})`;
+			} else {
+				clearInterval(interval);
+			}
+		}, counter);
+	}
+
+	popOut(element,time = this.popOutTime, size) {
+		let counter = (size.width + size.height) / time * 2;
+		let interval = setInterval(function(){
+			let transform = Number(element.style.transform.replace('scale(','').replace(')',''));
+			console.log(transform);
+			if (transform > 0) {
+				let val = transform - 0.01;
+				element.style.transform = `scale(${val})`;
+			} else {
+				clearInterval(interval);
+			}
+		}, counter);
 	}
 
 	fadeIn(element, time = this.fadeInTime) {
@@ -137,6 +174,15 @@ class modalUp extends Templates {
 		} else if(this.showStyle == "slide") {
 			this.slideOut(this.modalWindow);
 			time = this.disappearTime;
+		} else if(this.showStyle == "popup") {
+			time = this.popOutTime;
+			let width = this.modalWindow.offsetWidth;
+			let height = this.modalWindow.offsetHeight;
+			let size = {
+				width: width,
+				height: height
+			};
+			this.popOut(this.modalWindow,this.popOutTime,size);
 		}
 		setTimeout( () => {
 			this.containerElement.remove();
@@ -184,6 +230,11 @@ class modalUp extends Templates {
 		} else if(this.showStyle == "slide") {
 			modalWindow.style.transform = 'translateY(-150%)';
 			this.slideIn(modalWindow);
+		} else {
+			let width = this.modalWindow.offsetWidth;
+			let height = this.modalWindow.offsetHeight;
+			this.modalWindow.style.transform = 'scale(0.5)';
+			this.popUp(this.modalWindow,800,{width: width, height: height});
 		}
 		let closeBtn = modalWindow.getElementsByClassName('modalup-close')[0];
 		if(typeof this.timer != 'undefined') {
