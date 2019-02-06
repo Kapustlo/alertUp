@@ -84,7 +84,6 @@ class modalUp extends Templates {
 		let counter = (size.width + size.height) / time * 2;
 		let interval = setInterval(function(){
 			let transform = Number(element.style.transform.replace('scale(','').replace(')',''));
-			console.log(transform);
 			if (transform < 1) {
 				let val = transform + 0.01;
 				element.style.transform = `scale(${val})`;
@@ -98,7 +97,6 @@ class modalUp extends Templates {
 		let counter = (size.width + size.height) / time * 2;
 		let interval = setInterval(function(){
 			let transform = Number(element.style.transform.replace('scale(','').replace(')',''));
-			console.log(transform);
 			if (transform > 0) {
 				let val = transform - 0.01;
 				element.style.transform = `scale(${val})`;
