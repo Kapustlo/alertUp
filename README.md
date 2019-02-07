@@ -5,7 +5,7 @@
 // Available styles: "slide", "fade", "popup" </i>
 
 
-<i>// Create a window calling "create" function and passing an associative arrays as its argument </i>
+<i>// Create a window calling "create" function and passing an associative array as its argument </i>
 
 <i>// All available properties are written below</i>
 
@@ -16,7 +16,15 @@ modal.create({
   
   'title': 'title',
   
-  'timer': timeInMilliseconds
+  'timer': timeInMilliseconds,
+  
+  'bg': success/dark/danger,
+  
+  'size': small/medium/large,
+  
+  'textSize': small/medium/large,
+  
+  position: left/center/right
   
 });
 </b>
