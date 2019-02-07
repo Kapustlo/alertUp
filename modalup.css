@@ -6,7 +6,6 @@
 
 .modalup-window
 {	
-	font-size: 25px;
 	background-color: #fffffa;
 	text-align: center;
 	min-width: 128px;
@@ -21,6 +20,41 @@
 	color: #000000 !important;
 	z-index: 100000;
 	overflow: hidden;
+}
+
+.modalup-window-success
+{
+	background-color: #00a86b !important;
+	color: #ffffff !important;
+}
+
+.modalup-window-dark
+{
+	background-color: #151719 !important;
+	color: #ffffff !important;
+}
+
+.modalup-window-danger
+{
+	background-color: #e32636 !important;
+	color: #ffffff !important;
+}
+
+.modalup-window-size-small
+{
+
+	max-width: 200px !important;
+}
+
+.modalup-window-size-medium
+{
+
+	max-width: 400px !important;
+}
+
+.modalup-window-size-large
+{
+	max-width: 800px !important;
 }
 
 .modalup-main-div
@@ -77,7 +111,38 @@
 
 .modalup-text
 {
+	font-size: 25px;
 	padding-top: .5rem;
+}
+
+.modalup-window-text-size-small .modalup-title
+{
+	font-size: 20px !important;
+}
+
+.modalup-window-text-size-small .modalup-text
+{
+	font-size: 16px !important;
+}
+
+.modalup-window-text-size-medium .modalup-title
+{
+	font-size: 30px !important;
+}
+
+.modalup-window-text-size-medium .modalup-text
+{
+	font-size: 25px !important;
+}
+
+.modalup-window-text-size-large .modalup-title
+{
+	font-size: 40px !important;
+}
+
+.modalup-window-text-size-large .modalup-text
+{
+	font-size: 35px !important;
 }
 
 .modalup-close

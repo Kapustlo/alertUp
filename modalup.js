@@ -131,7 +131,6 @@ class modalUp extends Templates {
     },time * counter);
 	}
 
-
 	slideIn(element, time = this.appearTime) {
 		let counter = (150 / time) * 4 ;
 		let interval = setInterval( () => {
@@ -164,6 +163,24 @@ class modalUp extends Templates {
 		}, 1);
 	}
 
+	setPosition(element,position) {
+		let flexPosition;
+		switch (position) {
+			case "left":
+				flexPosition = 'flex-start';
+				break;
+			case "right":
+				flexPosition = 'flex-end';
+				break;
+			case "center":
+				flexPosition = 'flex-center';
+				break;
+		}
+		element.style.WebkitAlignItems = flexPosition;
+		element.style.alignItems = flexPosition;
+		return element;
+	}
+
 	getCloseTime(showStyle) {
 		if (showStyle == 'fade') {
 			return this.fadeOutTime;
@@ -175,7 +192,7 @@ class modalUp extends Templates {
 	}
 
 	closeModal() {
-		let time = getCloseTime(this.showStyle);
+		let time = this.getCloseTime(this.showStyle);
 		if (this.showStyle == "fade") {
 			this.fadeOut(this.modalWindow);
 		} else if(this.showStyle == "slide") {
@@ -223,7 +240,19 @@ class modalUp extends Templates {
 					},div); 
 					break;
 				case "timer":
-					this.timer = properties[property];
+					this.timer = innerHTML;
+					break;
+				case "bg":
+					this.modalWindow.className = this.modalWindow.className + ' modalup-window-' + innerHTML;
+					break;
+				case "size":
+					this.modalWindow.className = this.modalWindow.className + ' modalup-window-size-' + innerHTML;
+					break;
+				case "position":
+					this.setPosition(this.containerElement,innerHTML);
+					break;
+				case "textSize":
+					this.modalWindow.className = this.modalWindow.className + ' modalup-window-text-size-' + innerHTML;
 					break;
 			}
 		}
